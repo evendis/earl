@@ -14,10 +14,10 @@ describe Earl do
 
   describe 'Discovering scrapers' do
     it 'should make the Earl instance respond to each by name' do
-      class TitleScraper < Earl::Scraper
+      class Earl::TitleScraper < Earl::Scraper
         def scrape(response); :title_result; end
       end
-      class YouTubeEmbedHtmlScraper < Earl::Scraper
+      class Earl::YouTubeEmbedHtmlScraper < Earl::Scraper
         def scrape(response); :you_tube_embed_html_result; end
       end
       Earl['http://foo.bar'].title.should == :title_result
@@ -39,7 +39,7 @@ describe Earl::Scraper do
 
   describe 'When validating URLs' do
     before :each do
-      class TestScraper < Earl::Scraper
+      class Earl::TestScraper < Earl::Scraper
         validates_url /^http\:\/\/www\.test\.com\/$/
         def scrape(response); :test_result; end
       end
@@ -56,7 +56,7 @@ describe Earl::Scraper do
 
   describe 'When retrieving the response' do
     before :each do
-      class PassthroughScraper < Earl::Scraper
+      class Earl::PassthroughScraper < Earl::Scraper
         def scrape(response); response; end
       end
     end

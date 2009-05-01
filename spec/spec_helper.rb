@@ -7,3 +7,7 @@ require 'earl'
 Spec::Runner.configure do |config|
   
 end
+
+def fixture(name)
+  File.dirname(__FILE__) + "/fixtures/#{name}.html"
+end

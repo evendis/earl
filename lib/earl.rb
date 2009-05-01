@@ -3,6 +3,7 @@ gem     'activesupport'
 require 'activesupport'
 gem     'tenderlove-nokogiri'
 require 'nokogiri'
+require 'open-uri'
 
 class Earl
 
@@ -48,9 +49,12 @@ class Earl
   end
 
   def method_missing(method, *args)
-    klass = "#{method.to_s.classify}Scraper".constantize
+    klass = "Earl::#{method.to_s.classify}Scraper".constantize
     super unless klass
     klass.new(@url).execute
   end
 
 end
+
+require File.dirname(__FILE__) + '/earl/title_scraper'
+require File.dirname(__FILE__) + '/earl/youtube_embed_code_scraper'
