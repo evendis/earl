@@ -1,0 +1,7 @@
+= earl
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 teejayvanslyke. See LICENSE for details.
