@@ -40,10 +40,6 @@ module Earl
         new(url)
       end
 
-      def self.register_scraper(scraper)
-        @scrapers 
-      end
-
     end
 
   end
