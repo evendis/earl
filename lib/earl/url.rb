@@ -27,7 +27,7 @@ module Earl
     end
     
     def video
-      scraper.image(response)
+      scraper.video(response)
     end
 
     def description

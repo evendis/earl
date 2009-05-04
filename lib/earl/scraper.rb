@@ -12,7 +12,6 @@ module Earl
       end
 
       def for(url)
-        p @@registry
         @@registry.each do |klass|
           return klass.new(url) if klass.regexp.match(url)
         end
@@ -31,16 +30,23 @@ module Earl
       @url = url
     end
 
-    def title(response)
+    def title(doc)
+      doc.at('title').content
     end
 
-    def image(response)
+    def image(doc)
+      return nil unless doc.at('img')
+      doc.at('img')['src']
     end
     
-    def video(response)
+    def video(doc)
+      nil
     end
 
-    def description(response)
+    def description(doc)
+      element = doc.at("meta[name='description']")
+      return nil unless element
+      element['content']
     end
 
   end
