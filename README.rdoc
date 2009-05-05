@@ -1,6 +1,37 @@
-= earl
+Hey look!  It's...
 
-Description goes here.
+= Earl!
+
+Earl is a nice guy.  He wants to help you scrape the titles, descriptions, images, and video clips 
+from your favorite web pages so you can be as cool as Facebook when displaying user-submitted link 
+content.
+
+=== Excuse me Earl, could you tell me the title of this page?
+
+    >> Earl::Url['http://github.com/teejayvanslyke/earl'].title
+    => "teejayvanslyke's earl at master - GitHub"
+
+=== How about a friendly description so my users know whether they want to follow the link?
+
+    >> Earl::Url['http://github.com/teejayvanslyke/earl'].description
+    => "URL metadata API for scraping titles, descriptions, images, and videos from URL's."
+
+=== Oh Earl.  Your competence will take you places.  But, oh wise one, could you give me an image I can show as well?
+
+    >> Earl::Url['http://github.com/teejayvanslyke/earl'].image
+    => "/images/modules/header/logov3.png"
+
+== That's not all though...
+
+Like any loyal API, Earl is extensible.  To see all of the attributes a URL provides, simply ask:
+
+    >> Earl::Url['http://github.com/teejayvanslyke/earl'].attributes
+    => [:description, :title, :image]
+
+Some will provide more than others:
+
+    >> Earl::Url['http://www.youtube.com/watch?v=NNYfZd8iV2k'].attributes
+    => [:description, :title, :video, :image]
 
 == Copyright
 

@@ -29,9 +29,11 @@ describe Earl do
     end
   end
 
-  describe 'when retrieving the page video' do
-    it 'should return nil by default' do
-      Earl::Url[fixture(:bicycles)].video.should be_nil
+  describe 'When retrieving all attribute names' do
+    it 'should return them as an array' do
+      [ :description, :title, :image ].each do |attribute|
+        Earl::Url[fixture(:bicycles)].attributes.should include(attribute)
+      end
     end
   end
 

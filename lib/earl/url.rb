@@ -18,20 +18,16 @@ module Earl
       @url
     end
 
-    def title
-      scraper.title(response)
+    def method_missing(method, *args)
+      if scraper.has_attribute?(method)
+        return scraper.attribute(method, response)
+      end
+
+      super
     end
 
-    def image
-      scraper.image(response)
-    end
-    
-    def video
-      scraper.video(response)
-    end
-
-    def description
-      scraper.description(response)
+    def attributes
+      scraper.attributes.keys
     end
 
     class << self

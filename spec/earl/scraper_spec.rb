@@ -14,7 +14,7 @@ describe Earl::Scraper do
     before :each do
       class Earl::TestScraper < Earl::Scraper
         match /^http\:\/\/www\.test\.com\/$/
-        def title(response); :test_title; end
+        define_attribute(:title) {|response| :test_title }
       end
     end
 
@@ -26,6 +26,22 @@ describe Earl::Scraper do
   describe 'When retrieving the response' do
     it 'should return a Nokogiri document' do
       Earl::Url['test'].response.css('html').size.should == 1
+    end
+  end
+
+  describe 'Scraper inheritance' do
+    class SubScraper < Earl::Scraper
+      define_attribute :some_attribute do |doc|
+        doc
+      end
+    end
+
+    it 'inherits all attributes from its superclass' do
+      scraper = SubScraper.new('foo.bar')
+      scraper.attributes.should include(:title)
+      scraper.attributes.should include(:description)
+      scraper.attributes.should include(:image)
+      scraper.attributes.should include(:some_attribute)
     end
   end
 

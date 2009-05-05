@@ -12,9 +12,4 @@ describe Earl::Url do
     end
   end
 
-  describe 'Discovering scrapers' do
-    it 'should delegate to the scraper with the correct URL regexp if it is present'
-    it 'should use the default scraper if none is present for the URL'
-  end
-
 end

@@ -5,10 +5,16 @@ module Earl
     class << self
       @@registry = []
       attr_reader :regexp
+      attr_reader :attributes
 
       def match(regexp)
         @regexp = regexp
         register self
+      end
+
+      def define_attribute(name, &block)
+        @attributes ||= {}
+        @attributes[name] = block
       end
 
       def for(url)
@@ -30,23 +36,39 @@ module Earl
       @url = url
     end
 
-    def title(doc)
+    def attribute(name, doc)
+      return unless has_attribute?(name)
+      self.attributes[name].call(doc)
+    end
+
+    def attributes
+      if self.class.superclass == Earl::Scraper
+        self.class.superclass.attributes.merge(self.class.attributes)
+      else
+        self.class.attributes
+      end
+    end
+
+    def has_attribute?(name)
+      return false unless self.class.attributes
+      self.attributes.has_key?(name)
+    end
+
+    define_attribute :title do |doc|
       doc.at('title').content
     end
 
-    def image(doc)
-      return nil unless doc.at('img')
-      doc.at('img')['src']
-    end
-    
-    def video(doc)
-      nil
+    define_attribute :image do |doc|
+      if doc.at('img')
+        doc.at('img')['src']
+      end
     end
 
-    def description(doc)
+    define_attribute :description do |doc|
       element = doc.at("meta[name='description']")
-      return nil unless element
-      element['content']
+      if element
+        element['content']
+      end
     end
 
   end

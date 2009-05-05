@@ -2,7 +2,7 @@ module Earl
   class YoutubeScraper < Earl::Scraper
     match /^http\:\/\/www\.youtube\.com\/watch\?v\=.*$/
 
-    def video(doc)
+    define_attribute :video do |doc|
       doc.at('#embed_code')['value']
     end
   end
