@@ -43,6 +43,8 @@ Need to scrape a site that's not currently supported by Earl?  Implement your ow
       end
     end
 
+The define_attribute method will supply you with a Nokogiri document which you can traverse to your heart's content.
+
 Earl will register your scraper and automagically respond:
 
   >> Earl::Url['http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie'].video
