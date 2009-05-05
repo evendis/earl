@@ -33,6 +33,21 @@ Some will provide more than others:
     >> Earl::Url['http://www.youtube.com/watch?v=NNYfZd8iV2k'].attributes
     => [:description, :title, :video, :image]
 
+Need to scrape a site that's not currently supported by Earl?  Implement your own scraper:
+
+    class FunnyOrDieScraper < Earl::Scraper
+      match /^http\:\/\/www\.funnyordie\.com\/videos\/(.*)$/
+
+      define_attribute :video do |doc|
+        doc.at('input#embed')['value']
+      end
+    end
+
+Earl will register your scraper and automagically respond:
+
+  >> Earl::Url['http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie'].video
+  => "<object width="512" height="328" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="ordie_player_684c45c0e4"><param name="movie" value="http://player.ordienetworks.com/flash/fodplayer.swf" /><param name="flashvars" value="key=684c45c0e4" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always"></param><embed width="512" height="328" flashvars="key=684c45c0e4" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://player.ordienetworks.com/flash/fodplayer.swf" name="ordie_player_684c45c0e4" type="application/x-shockwave-flash"></embed></object><div style="text-align:left;font-size:x-small;margin-top:0;width:512px;"><a href="http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie" title="from Honor Student">The Amazing Adventures of David and Jennie: Gettin' Laid!</a> - watch more <a href="http://www.funnyordie.com/" title="on Funny or Die">funny videos</a></div>"
+
 == Copyright
 
-Copyright (c) 2009 teejayvanslyke. See LICENSE for details.
+Copyright (c) 2009 T.J. VanSlyke. See LICENSE for details.

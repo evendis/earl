@@ -12,3 +12,4 @@ require 'earl/scraper'
 require 'earl/url'
 
 require 'earl/youtube_scraper'
+require 'earl/funny_or_die_scraper'
