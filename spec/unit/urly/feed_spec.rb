@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Early do
-  let(:early) { Early::Url[url] }
+describe Urly do
+  let(:instance) { Urly::Url[url] }
   let(:url) { 'http:://example.com' }
 
-  before { Early::Url.any_instance.stub(:uri).and_return(source) }
-  subject { early }
+  before { Urly::Url.any_instance.stub(:uri).and_return(source) }
+  subject { instance }
 
   context "when page has no feeds associated" do
     let(:source) { fixture(:page_without_feeds) }
@@ -35,15 +35,15 @@ describe Early do
     its(:atom_feed) { should eql('http://www.readwriteweb.com/atom.xml') }
     describe "#feed" do
       context "default (rss)" do
-        subject { early.feed }
+        subject { instance.feed }
         it { should eql('http://www.readwriteweb.com/rss.xml') }
       end
       context "rss prefered" do
-        subject { early.feed(:rss) }
+        subject { instance.feed(:rss) }
         it { should eql('http://www.readwriteweb.com/rss.xml') }
       end
       context "atom prefered" do
-        subject { early.feed(:atom) }
+        subject { instance.feed(:atom) }
         it { should eql('http://www.readwriteweb.com/atom.xml') }
       end
     end

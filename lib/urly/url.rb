@@ -1,6 +1,6 @@
 require 'open-uri'
 
-module Early
+module Urly
 
   class Url
 

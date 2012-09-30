@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Early::Scraper do
+describe Urly::Scraper do
 
   before :each do
-    Early::Url.any_instance.stub(:uri_response).and_return(<<-DOC
+    Urly::Url.any_instance.stub(:uri_response).and_return(<<-DOC
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
     <html></html>
     DOC
@@ -12,25 +12,25 @@ describe Early::Scraper do
 
   describe 'When validating URLs' do
     before :each do
-      class Early::TestScraper < Early::Scraper
+      class Urly::TestScraper < Urly::Scraper
         match /^http\:\/\/www\.test\.com\/$/
         define_attribute(:title) {|response| :test_title }
       end
     end
 
     it 'should return the result if the URL matches the scraper regexp' do
-      Early::Url['http://www.test.com/'].title.should == :test_title
+      Urly::Url['http://www.test.com/'].title.should == :test_title
     end
   end
 
   describe 'When retrieving the response' do
     it 'should return a Nokogiri document' do
-      Early::Url['test'].response.css('html').size.should == 1
+      Urly::Url['test'].response.css('html').size.should == 1
     end
   end
 
   describe 'Scraper inheritance' do
-    class SubScraper < Early::Scraper
+    class SubScraper < Urly::Scraper
       define_attribute :some_attribute do |doc|
         doc
       end

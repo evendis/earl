@@ -1,4 +1,4 @@
-module Early
+module Urly
 
   class Scraper
 
@@ -42,7 +42,7 @@ module Early
     end
 
     def attributes
-      if self.class.superclass == Early::Scraper
+      if self.class.superclass == Urly::Scraper
         self.class.superclass.attributes.merge(self.class.attributes)
       else
         self.class.attributes

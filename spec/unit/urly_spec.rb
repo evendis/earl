@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Early do
+describe Urly do
 
-  before { Early::Url.any_instance.stub(:uri).and_return(source) }
+  before { Urly::Url.any_instance.stub(:uri).and_return(source) }
   let(:url) { 'http://mock.net' }
-  let(:early) { Early::Url[url] }
-  subject { early }
+  let(:instance) { Urly::Url[url] }
+  subject { instance }
 
   describe '#title' do
     context "example with title tag" do

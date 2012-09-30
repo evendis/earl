@@ -5,10 +5,10 @@ require 'spec_helper'
 # or
 #  rake spec:all
 #
-describe Early do
-  let(:early) { Early::Url[url] }
+describe Urly do
+  let(:instance) { Urly::Url[url] }
 
-  subject { early }
+  subject { instance }
 
   context "when page has no feeds associated" do
     let(:url) { 'http://google.com/' }
@@ -41,15 +41,15 @@ describe Early do
     its(:atom_feed) { should eql(expected_atom_feed) }
     describe "#feed" do
       context "default (rss)" do
-        subject { early.feed }
+        subject { instance.feed }
         it { should eql(expected_rss_feed) }
       end
       context "rss prefered" do
-        subject { early.feed(:rss) }
+        subject { instance.feed(:rss) }
         it { should eql(expected_rss_feed) }
       end
       context "atom prefered" do
-        subject { early.feed(:atom) }
+        subject { instance.feed(:atom) }
         it { should eql(expected_atom_feed) }
       end
     end
