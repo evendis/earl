@@ -22,5 +22,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
   gem.add_development_dependency(%q<rdoc>, ["~> 3.11"])
   gem.add_development_dependency(%q<guard-rspec>, ["~> 1.2.0"])
+  gem.add_development_dependency(%q<rb-fsevent>, ["~> 0.9.1"])
 
 end
