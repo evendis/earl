@@ -14,7 +14,7 @@ available at https://github.com/evendis/urly.
 
 Pass any url-like string to Urly:
 
-    my_urly_instance = Urly.new['https://github.com/teejayvanslyke/earl']
+    my_urly_instance = Urly.new('https://github.com/teejayvanslyke/earl')
     #
     # or using the []= convenience method:
     my_urly_instance = Urly['https://github.com/teejayvanslyke/earl']
