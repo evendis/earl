@@ -1,14 +1,18 @@
 require 'spec_helper'
 
-describe Urly::Url do
+describe Urly do
 
 
-  describe '[]' do
-    before { Urly::Url.any_instance.stub(:uri).and_return('document') }
-    it 'should assign the argument as its URL' do
-      Urly::Url['http://test.host/'].to_s.should == 'http://test.host/'
-    end
+  describe '##new' do
+    before { Urly.any_instance.stub(:uri).and_return('document') }
+    subject { Urly.new('http://test.host/') }
+    its(:to_s) { should eql('http://test.host/') }
   end
 
+  describe '[]=' do
+    before { Urly.any_instance.stub(:uri).and_return('document') }
+    subject { Urly['http://test.host/'] }
+    its(:to_s) { should eql('http://test.host/') }
+  end
 
 end

@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 
-module Urly
+class Urly
 end
 
 require 'urly/version'

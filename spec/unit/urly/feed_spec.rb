@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe Urly do
-  let(:instance) { Urly::Url[url] }
+  let(:instance) { Urly[url] }
   let(:url) { 'http:://example.com' }
 
-  before { Urly::Url.any_instance.stub(:uri).and_return(source) }
+  before { Urly.any_instance.stub(:uri).and_return(source) }
   subject { instance }
 
   context "when page has no feeds associated" do

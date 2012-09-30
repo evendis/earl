@@ -1,56 +1,64 @@
-Hey look!  It's...
-
 = Urly {<img src="https://secure.travis-ci.org/evendis/urly.png" />}[http://travis-ci.org/evendis/urly]
 
-Earl is a nice guy.  He wants to help you scrape the titles, descriptions, images, and video clips
+Urly wants to help you scrape the titles, descriptions, images, and video clips
 from your favorite web pages so you can be as cool as Facebook when displaying user-submitted link
 content.
 
-=== Excuse me Earl, could you tell me the title of this page?
+NB: urly is derived from on a source project called _earl_ by {teejayvanslyke}[https://github.com/teejayvanslyke/earl].
+The revamp into the urly project was done by {Paul Gallagher}[https://github.com/tardate], and master source is currently
+available at https://github.com/evendis/urly.
 
-    >> Urly::Url['https://github.com/teejayvanslyke/earl'].title
-    => "teejayvanslyke's earl at master - GitHub"
+== The Urly Cookbook
 
-=== How about a friendly description so my users know whether they want to follow the link?
+=== How do instantiate Urly?
 
-    >> Urly::Url['https://github.com/teejayvanslyke/earl'].description
-    => "URL metadata API for scraping titles, descriptions, images, and videos from URL's."
+Pass any url-like string to Urly:
 
-=== Oh Earl.  Your competence will take you places.  But, oh wise one, could you give me an image I can show as well?
+    my_urly_instance = Urly.new['https://github.com/teejayvanslyke/earl']
+    #
+    # or using the []= convenience method:
+    my_urly_instance = Urly['https://github.com/teejayvanslyke/earl']
 
-    >> Urly::Url['https://github.com/teejayvanslyke/earl'].image
-    => "/images/modules/header/logov3.png"
 
-== That's not all though...
+=== How do I inspect details of the page?
 
-Like any loyal API, Earl is extensible.  To see all of the attributes a URL provides, simply ask:
+    urly = Urly['https://github.com/teejayvanslyke/earl']
+    urly.title
+    =>  "teejayvanslyke/earl · GitHub"
+    urly.description
+    => "earl - URL metadata API for scraping titles, descriptions, images, and videos from URL's."
+    urly.image
+    => "https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7@4x.png?1338956357"
 
-    >> Urly::Url['https://github.com/teejayvanslyke/earl'].attributes
-    => [:description, :title, :image]
+=== How do I inspect what attributes are available for a page?
 
-Some will provide more than others:
+To see all of the attributes a URL provides, simply ask:
 
-    >> Urly::Url['http://www.youtube.com/watch?v=NNYfZd8iV2k'].attributes
-    => [:description, :title, :video, :image]
+    urly = Urly['https://github.com/teejayvanslyke/earl']
+    urly.attributes
+    => [:title, :image, :description, :rss_feed, :atom_feed]
 
-Need to scrape a site that's not currently supported by Earl?  Implement your own scraper:
 
-    class FunnyOrDieScraper < Urly::Scraper
-      match /^http\:\/\/www\.funnyordie\.com\/videos\/(.*)$/
+=== How can I extend Urly to scrape additional page details?
 
-      define_attribute :video do |doc|
-        doc.at('input#embed')['value']
+Need to scrape additional page details currently supported by Earl?  Implement your own scraper:
+
+    class QotdScraper < Urly::Scraper
+      match /^http\:\/\/www\.quotationspage\.com\/qotd\.html$/
+
+      define_attribute :qotd do |doc|
+        doc.at('dt.quote a').text
       end
     end
 
 The define_attribute method will supply you with a Nokogiri document which you can traverse to your heart's content.
+Use the match method to limit the scope of URLs that your scraper will apply to.
 
-Earl will register your scraper and automagically respond:
+Your new attribute is now available for use:
 
-  >> Urly::Url['http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie'].video
-  => "<object width="512" height="328" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="ordie_player_684c45c0e4"><param name="movie" value="http://player.ordienetworks.com/flash/fodplayer.swf" /><param name="flashvars" value="key=684c45c0e4" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always"></param><embed width="512" height="328" flashvars="key=684c45c0e4" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://player.ordienetworks.com/flash/fodplayer.swf" name="ordie_player_684c45c0e4" type="application/x-shockwave-flash"></embed></object><div style="text-align:left;font-size:x-small;margin-top:0;width:512px;"><a href="http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie" title="from Honor Student">The Amazing Adventures of David and Jennie: Gettin' Laid!</a> - watch more <a href="http://www.funnyordie.com/" title="on Funny or Die">funny videos</a></div>"
+    Urly['http://www.quotationspage.com/qotd.html'].qotd
+    => "Never interrupt your enemy when he is making a mistake."
 
-== The Urly Cookbook
 
 === How do I install it for normal use?
 

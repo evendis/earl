@@ -6,7 +6,7 @@ require 'spec_helper'
 #  rake spec:all
 #
 describe Urly do
-  let(:instance) { Urly::Url[url] }
+  let(:instance) { Urly[url] }
 
   subject { instance }
 

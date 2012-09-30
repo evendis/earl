@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Urly::Scraper do
 
   before :each do
-    Urly::Url.any_instance.stub(:uri_response).and_return(<<-DOC
+    Urly.any_instance.stub(:uri_response).and_return(<<-DOC
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
     <html></html>
     DOC
@@ -19,13 +19,13 @@ describe Urly::Scraper do
     end
 
     it 'should return the result if the URL matches the scraper regexp' do
-      Urly::Url['http://www.test.com/'].title.should == :test_title
+      Urly['http://www.test.com/'].title.should == :test_title
     end
   end
 
   describe 'When retrieving the response' do
     it 'should return a Nokogiri document' do
-      Urly::Url['test'].response.css('html').size.should == 1
+      Urly['test'].response.css('html').size.should == 1
     end
   end
 
