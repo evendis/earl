@@ -3,11 +3,17 @@ PATH
   specs:
     urly (0.0.1)
       nokogiri (>= 1.4.4)
+      oembedr (>= 1.0.0)
 
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.3)
+    faraday (0.8.4)
+      multipart-post (~> 1.1)
+    faraday_middleware (0.8.8)
+      faraday (>= 0.7.4, < 0.9)
+    ffi (1.1.5)
     guard (1.4.0)
       listen (>= 0.4.2)
       thor (>= 0.14.6)
@@ -15,7 +21,15 @@ GEM
       guard (>= 1.1)
     json (1.7.5)
     listen (0.5.2)
+    mime-types (1.19)
+    multi_json (1.3.6)
+    multipart-post (1.1.5)
     nokogiri (1.5.5)
+    oembedr (1.0.0)
+      faraday
+      faraday_middleware
+      multi_json
+      typhoeus
     rake (0.9.2.2)
     rb-fsevent (0.9.2)
     rdoc (3.12)
@@ -29,6 +43,9 @@ GEM
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.8.0)
     thor (0.16.0)
+    typhoeus (0.4.2)
+      ffi (~> 1.0)
+      mime-types (~> 1.18)
 
 PLATFORMS
   ruby
