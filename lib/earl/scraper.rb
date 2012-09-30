@@ -71,6 +71,18 @@ module Earl
       end
     end
 
+    define_attribute :rss_feed do |doc|
+      if element = doc.at("link[type='application/rss+xml']")
+        element['href']
+      end
+    end
+
+    define_attribute :atom_feed do |doc|
+      if element = doc.at("link[type='application/atom+xml']")
+        element['href']
+      end
+    end
+
   end
 
 end
