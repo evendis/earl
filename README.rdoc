@@ -8,34 +8,34 @@ content.
 
 === Excuse me Earl, could you tell me the title of this page?
 
-    >> Earl::Url['http://github.com/teejayvanslyke/earl'].title
+    >> Early::Url['https://github.com/teejayvanslyke/earl'].title
     => "teejayvanslyke's earl at master - GitHub"
 
 === How about a friendly description so my users know whether they want to follow the link?
 
-    >> Earl::Url['http://github.com/teejayvanslyke/earl'].description
+    >> Early::Url['https://github.com/teejayvanslyke/earl'].description
     => "URL metadata API for scraping titles, descriptions, images, and videos from URL's."
 
 === Oh Earl.  Your competence will take you places.  But, oh wise one, could you give me an image I can show as well?
 
-    >> Earl::Url['http://github.com/teejayvanslyke/earl'].image
+    >> Early::Url['https://github.com/teejayvanslyke/earl'].image
     => "/images/modules/header/logov3.png"
 
 == That's not all though...
 
 Like any loyal API, Earl is extensible.  To see all of the attributes a URL provides, simply ask:
 
-    >> Earl::Url['http://github.com/teejayvanslyke/earl'].attributes
+    >> Early::Url['https://github.com/teejayvanslyke/earl'].attributes
     => [:description, :title, :image]
 
 Some will provide more than others:
 
-    >> Earl::Url['http://www.youtube.com/watch?v=NNYfZd8iV2k'].attributes
+    >> Early::Url['http://www.youtube.com/watch?v=NNYfZd8iV2k'].attributes
     => [:description, :title, :video, :image]
 
 Need to scrape a site that's not currently supported by Earl?  Implement your own scraper:
 
-    class FunnyOrDieScraper < Earl::Scraper
+    class FunnyOrDieScraper < Early::Scraper
       match /^http\:\/\/www\.funnyordie\.com\/videos\/(.*)$/
 
       define_attribute :video do |doc|
@@ -47,8 +47,52 @@ The define_attribute method will supply you with a Nokogiri document which you c
 
 Earl will register your scraper and automagically respond:
 
-  >> Earl::Url['http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie'].video
+  >> Early::Url['http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie'].video
   => "<object width="512" height="328" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="ordie_player_684c45c0e4"><param name="movie" value="http://player.ordienetworks.com/flash/fodplayer.swf" /><param name="flashvars" value="key=684c45c0e4" /><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always"></param><embed width="512" height="328" flashvars="key=684c45c0e4" allowfullscreen="true" allowscriptaccess="always" quality="high" src="http://player.ordienetworks.com/flash/fodplayer.swf" name="ordie_player_684c45c0e4" type="application/x-shockwave-flash"></embed></object><div style="text-align:left;font-size:x-small;margin-top:0;width:512px;"><a href="http://www.funnyordie.com/videos/684c45c0e4/the-amazing-adventures-of-david-and-jennie" title="from Honor Student">The Amazing Adventures of David and Jennie: Gettin' Laid!</a> - watch more <a href="http://www.funnyordie.com/" title="on Funny or Die">funny videos</a></div>"
+
+== The Early Cookbook
+
+=== How do I install it for normal use?
+
+If using bundler, add gem 'early' your application's Gemfile and run `bundle`.
+
+Or install it from the command-line:
+
+    $ gem install early
+
+=== How do I install it for gem development?
+
+To work on enhancements of fix bugs in Early, fork and clone the github repository.
+If you are using bundler (recommended), run <tt>bundle</tt> to install development dependencies:
+
+    $ gem install bundler
+    $ bundle
+
+=== How do I run the tests?
+
+Once development dependencies are installed, just:
+
+    $ rake
+    # or..
+    $ rake spec
+
+=== How do I automatically run tests when I modify files?
+
+Guard is installed as part of the development dependencies. Start a guard process in a terminal window:
+
+    $ bundle exec guard
+
+It will run all the tests to start with by default. Then whenever you change a file, the associated tests will execute in this terminal window.
+
+== Contributing to Early
+
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
 == Copyright
 
