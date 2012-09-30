@@ -1,4 +1,4 @@
-require 'earl'
+require 'early'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

@@ -1,3 +1,3 @@
-module Earl
+module Early
   VERSION = "0.0.1"
 end

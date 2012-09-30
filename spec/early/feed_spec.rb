@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Earl do
-  let(:early) { Earl::Url[source] }
+describe Early do
+  let(:early) { Early::Url[source] }
 
   subject { early }
 

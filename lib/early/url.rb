@@ -1,4 +1,4 @@
-module Earl
+module Early
 
   class Url
 

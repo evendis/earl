@@ -1,5 +1,5 @@
-module Earl
-  class FunnyOrDieScraper < Earl::Scraper
+module Early
+  class FunnyOrDieScraper < Early::Scraper
     match /^http\:\/\/www\.funnyordie\.com\/videos\/(.*)$/
 
     define_attribute :video do |doc|
