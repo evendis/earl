@@ -80,7 +80,7 @@ class Urly
   # +options+ defines a custom oembed options hash and will cause a re-fetch of the oembed metadata
   def oembed(options=nil)
     if options # use custom options, refetch oembed metadata
-      options[:oembed] = options
+      @options[:oembed] = options
       @oembed = nil
     end
     begin

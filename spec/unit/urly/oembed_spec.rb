@@ -22,6 +22,14 @@ describe Urly do
       let(:expected) { { :maxwidth => "260", :maxheight => "315" } }
       it { should eql(expected) }
     end
+    context "with custom options passed to oembed" do
+      let(:expected) { { :maxwidth => "360", :maxheight => "315" } }
+      before do
+        Oembedr.stub(:fetch).and_return(nil)
+        instance.oembed({ :maxwidth => "360" })
+      end
+      it { should eql(expected) }
+    end
   end
 
   describe "#oembed" do
