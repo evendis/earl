@@ -2,16 +2,16 @@
 require File.expand_path('../lib/early/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["teejayvanslyke"]
-  gem.email         = ["tj@elctech.com"]
-  gem.description   = %q{URL meta}
-  gem.summary       = %q{URL meta}
+  gem.authors       = ["teejayvanslyke", "Paul Gallagher"]
+  gem.email         = ["tj@elctech.com", "gallagher.paul@gmail.com"]
+  gem.description   = %q{URL metadata API}
+  gem.summary       = %q{URL metadata API for scraping titles, descriptions, images, and videos from URL's}
   gem.homepage      = "https://github.com/evendis/early"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "earl"
+  gem.name          = "early"
   gem.require_paths = ["lib"]
   gem.version       = Early::VERSION
 
