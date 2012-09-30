@@ -1,9 +1,9 @@
 Hey look!  It's...
 
-= Earl!
+= Earl! {<img src="https://secure.travis-ci.org/evendis/early.png" />}[http://travis-ci.org/evendis/early]
 
-Earl is a nice guy.  He wants to help you scrape the titles, descriptions, images, and video clips 
-from your favorite web pages so you can be as cool as Facebook when displaying user-submitted link 
+Earl is a nice guy.  He wants to help you scrape the titles, descriptions, images, and video clips
+from your favorite web pages so you can be as cool as Facebook when displaying user-submitted link
 content.
 
 === Excuse me Earl, could you tell me the title of this page?
