@@ -1,13 +1,13 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Early::Scraper do
 
   before :each do
-    Kernel.stub!(:open).and_return(<<-DOC
+    Early::Url.any_instance.stub(:uri_response).and_return(<<-DOC
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
     <html></html>
-                                   DOC
-                                   )
+    DOC
+    )
   end
 
   describe 'When validating URLs' do

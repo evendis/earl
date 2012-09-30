@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Early do
-  let(:early) { Early::Url[source] }
+  let(:early) { Early::Url[url] }
+  let(:url) { 'http:://example.com' }
 
+  before { Early::Url.any_instance.stub(:uri).and_return(source) }
   subject { early }
 
   context "when page has no feeds associated" do
@@ -46,5 +48,12 @@ describe Early do
       end
     end
   end
+
+  # context "when page IS an rss feed" do
+  #   let(:source) { fixture(:page_as_rss) }
+  #   its(:has_feed?) { should be_true }
+  #   its(:rss_feed) { should eql(url) }
+  #   its(:feed) { should eql(url) }
+  # end
 
 end

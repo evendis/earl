@@ -1,21 +1,45 @@
+require 'open-uri'
+
 module Early
 
   class Url
 
-    def scraper
-      Scraper.for(@url)
-    end
-
-    def response
-      @response ||= Nokogiri::HTML(Kernel.open(@url))
-    end
+    attr_accessor :url
 
     def initialize(url)
       @url = url
     end
 
+    def uri
+      @uri ||= URI.parse(url)
+    end
+
+    def uri_response
+      @uri_response ||= open(uri)
+    end
+
+    def content_type
+      @content_type ||= uri_response && uri_response.content_type
+    end
+
+    def base_uri
+      @base_uri ||= uri_response && uri_response.base_uri
+    end
+
+    def base_url
+      base_uri && base_uri.to_s || url
+    end
+
+    def scraper
+      Scraper.for(url)
+    end
+
+    def response
+      @response ||= Nokogiri::HTML(uri_response)
+    end
+
     def to_s
-      @url
+      url
     end
 
     def method_missing(method, *args)

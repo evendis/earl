@@ -4,10 +4,22 @@ require "bundler/gem_tasks"
 require 'rspec'
 require 'rspec/core/rake_task'
 
-desc "Run all RSpec test examples"
-RSpec::Core::RakeTask.new do |spec|
-  spec.rspec_opts = ["-c", "-f progress"]
-  spec.pattern = 'spec/**/*_spec.rb'
+desc "Run only unit test examples"
+RSpec::Core::RakeTask.new do |t|
+  t.rspec_opts = ["-c", "-f progress"]
+  t.pattern = 'spec/unit/**/*_spec.rb'
+end
+
+desc "Run only integration test examples"
+RSpec::Core::RakeTask.new(:'spec:integration') do |t|
+  t.rspec_opts = ["-c", "-f progress"]
+  t.pattern = 'spec/integration/**/*_spec.rb'
+end
+
+desc "Run all test examples including integration tests"
+RSpec::Core::RakeTask.new(:'spec:all') do |t|
+  t.rspec_opts = ["-c", "-f progress"]
+  t.pattern = 'spec/**/*_spec.rb'
 end
 
 task :default => :spec
