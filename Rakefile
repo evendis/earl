@@ -1,48 +1,26 @@
-require 'rubygems'
-require 'rake'
+#!/usr/bin/env rake
+require "bundler/gem_tasks"
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "earl"
-    gem.summary = %Q{TODO}
-    gem.email = "tj@elctech.com"
-    gem.homepage = "http://github.com/teejayvanslyke/earl"
-    gem.authors = ["teejayvanslyke"]
+require 'rspec'
+require 'rspec/core/rake_task'
 
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
-
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.libs << 'lib' << 'spec'
-  spec.spec_files = FileList['spec/**/*_spec.rb']
-end
-
-Spec::Rake::SpecTask.new(:rcov) do |spec|
-  spec.libs << 'lib' << 'spec'
+desc "Run all RSpec test examples"
+RSpec::Core::RakeTask.new do |spec|
+  spec.rspec_opts = ["-c", "-f progress"]
   spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
 end
-
 
 task :default => :spec
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  if File.exist?('VERSION.yml')
-    config = YAML.load(File.read('VERSION.yml'))
-    version = "#{config[:major]}.#{config[:minor]}.#{config[:patch]}"
-  else
-    version = ""
-  end
-
+require 'rdoc/task'
+RDoc::Task.new do |rdoc|
+  rdoc.main = "README.rdoc"
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "earl #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.title = "earl"
+  rdoc.rdoc_files.include('README*', 'lib/**/*.rb')
 end
 
+desc "Open an irb session preloaded with this library"
+task :console do
+  sh "irb -rubygems -I lib -r earl.rb"
+end
