@@ -48,5 +48,18 @@ describe Urly do
     end
   end
 
+  describe '#metadata' do
+    let(:source) { fixture(:bicycles) }
+    its(:metadata) { should be_a(Hash) }
+    its(:metadata) { should eql({
+      :title => 'bicycles (bicycles) on Twitter',
+      :description => 'I write business plans for a living and fiction to stay sane.  I also try my hand at all sorts of creative side projects: painting, game dev, whiskey drinking..',
+      :image => 'http://assets0.twitter.com/images/loader.gif',
+      :rss_feed => "/statuses/user_timeline/user_id.rss",
+      :base_url => "http://mock.net",
+      :feed => "/statuses/user_timeline/user_id.rss"
+    }) }
+  end
+
 end
 

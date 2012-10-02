@@ -6,4 +6,4 @@ end
 
 require 'urly/version'
 require 'urly/scraper'
-require 'urly/url'
+require 'urly/urly'

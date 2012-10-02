@@ -10,6 +10,10 @@ class Urly
     @options = options
   end
 
+  def to_s
+    url
+  end
+
   def uri
     @uri ||= URI.parse(url)
   end
@@ -18,17 +22,26 @@ class Urly
     @uri_response ||= open(uri)
   end
 
-  def content_type
-    @content_type ||= uri_response && uri_response.content_type
+  # Returns
+  # :base_url - the actual url (resolved after possible redirect) as a String
+  # :content_type - mime type
+  # :charset - returns a charset parameter in Content-Type field. It is downcased for canonicalization.
+  # :content_encoding - returns a list of encodings in Content-Encoding field as an Array of String. The encodings are downcased for canonicalization.
+  # :last_modified - returns a Time which represents Last-Modified field.
+  def uri_response_attribute(name)
+    if name == :base_url
+      (uri_response_attribute(:base_uri) || url).to_s
+    else
+      uri_response && uri_response.respond_to?(name) && uri_response.send(name)
+    end
   end
+  protected :uri_response_attribute
 
-  def base_uri
-    @base_uri ||= uri_response && uri_response.base_uri
+  def uri_response_attributes
+    [:content_type,:base_url,:charset,:content_encoding,:last_modified]
   end
+  protected :uri_response_attributes
 
-  def base_url
-    base_uri && base_uri.to_s || url
-  end
 
   def scraper
     Scraper.for(url)
@@ -38,20 +51,34 @@ class Urly
     @response ||= Nokogiri::HTML(uri_response)
   end
 
-  def to_s
-    url
+  # Returns a hash of link meta data, including:
+  # :title, :description, :image (all attributes)
+  # :base_url
+  def metadata
+    data = oembed || {}
+    attributes.each do |attribute|
+      if attribute_value = self.send(attribute)
+        data[attribute] ||= attribute_value
+      end
+    end
+    data
   end
 
+  # Dispatch missing methods if a match for:
+  # - uri_response_attributes
+  # - scraper attributes
   def method_missing(method, *args)
-    if scraper.has_attribute?(method)
+    if uri_response_attributes.include?(method)
+      return uri_response_attribute(method)
+    elsif scraper.has_attribute?(method)
       return scraper.attribute(method, response)
     end
-
     super
   end
 
+  # Returns a full array of attributes available for the link
   def attributes
-    scraper.attributes.keys
+    scraper.attributes.keys + uri_response_attributes + [:feed]
   end
 
   # Returns the options to be used for oembed
@@ -84,7 +111,12 @@ class Urly
       @oembed = nil
     end
     begin
-      @oembed ||= Oembedr.fetch(base_url, :params => oembed_options).body
+      @oembed ||= if h = Oembedr.fetch(base_url, :params => oembed_options).body
+        h.keys.each do |key| # symbolize_keys!
+          h[(key.to_sym rescue key) || key] = h.delete(key)
+        end
+        h
+      end
     rescue
     end
     @oembed
@@ -92,7 +124,7 @@ class Urly
 
   # Returns the oembed code for the url (or nil if not defined/available)
   def oembed_html
-    oembed && oembed['html']
+    oembed && oembed[:html]
   end
 
   # Returns true if there is an ATOM or RSS feed associated with this URL.

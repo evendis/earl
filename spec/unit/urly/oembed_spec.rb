@@ -39,7 +39,7 @@ describe Urly do
       Oembedr.stub(:fetch).and_return(dummy_response)
     end
     subject { instance.oembed }
-    it { should eql({ 'html' => '<iframe/>' }) }
+    it { should eql({ :html => '<iframe/>' }) }
     describe "#oembed_html" do
       subject { instance.oembed_html }
       it { should eql('<iframe/>') }
