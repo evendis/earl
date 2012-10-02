@@ -27,10 +27,14 @@ class Urly
   # :content_type - mime type
   # :charset - returns a charset parameter in Content-Type field. It is downcased for canonicalization.
   # :content_encoding - returns a list of encodings in Content-Encoding field as an Array of String. The encodings are downcased for canonicalization.
-  # :last_modified - returns a Time which represents Last-Modified field.
+  # :headers - raw response header metadata
+  # (excluded since this generally returns not RFC 2616 compliant date :last_modified  - returns a Time which represents Last-Modified field.
   def uri_response_attribute(name)
-    if name == :base_url
+    case name
+    when :base_url
       (uri_response_attribute(:base_uri) || url).to_s
+    when :headers
+      uri_response_attribute(:meta)
     else
       uri_response && uri_response.respond_to?(name) && uri_response.send(name)
     end
@@ -38,7 +42,7 @@ class Urly
   protected :uri_response_attribute
 
   def uri_response_attributes
-    [:content_type,:base_url,:charset,:content_encoding,:last_modified]
+    [:content_type,:base_url,:charset,:content_encoding,:headers]
   end
   protected :uri_response_attributes
 
@@ -69,7 +73,7 @@ class Urly
   def method_missing(method, *args)
     if uri_response_attributes.include?(method)
       return uri_response_attribute(method)
-    elsif scraper.has_attribute?(method)
+    elsif scraper && scraper.has_attribute?(method)
       return scraper.attribute(method)
     end
     super
