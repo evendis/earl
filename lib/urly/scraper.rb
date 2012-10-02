@@ -15,11 +15,11 @@ class Urly::Scraper
       @attributes[name] = block
     end
 
-    def for(url)
+    def for(url, urly_source)
       @@registry.each do |klass|
-        return klass.new(url) if klass.regexp.match(url)
+        return klass.new(url,urly_source) if klass.regexp.match(url)
       end
-      return Urly::Scraper.new(url)
+      return Urly::Scraper.new(url,urly_source)
     end
 
     private
@@ -30,13 +30,20 @@ class Urly::Scraper
 
   end
 
-  def initialize(url)
+  attr_reader :urly_source
+
+  def initialize(url, urly_source = nil)
     @url = url
+    @urly_source = urly_source
   end
 
-  def attribute(name, doc)
+  def response
+    @response ||= urly_source && Nokogiri::HTML(urly_source.uri_response)
+  end
+
+  def attribute(name)
     return unless has_attribute?(name)
-    self.attributes[name].call(doc)
+    self.attributes[name].call(response)
   end
 
   def attributes
@@ -53,18 +60,19 @@ class Urly::Scraper
   end
 
   define_attribute :title do |doc|
-    doc.at('title').content
+    if title = doc.at('title')
+      title.content
+    end
   end
 
   define_attribute :image do |doc|
-    if doc.at('img')
-      doc.at('img')['src']
+    if first_image = doc.at('img')
+      first_image['src']
     end
   end
 
   define_attribute :description do |doc|
-    element = doc.at("meta[name='description']")
-    if element
+    if element = doc.at("meta[name='description']")
       element['content']
     end
   end

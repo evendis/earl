@@ -42,13 +42,12 @@ class Urly
   end
   protected :uri_response_attributes
 
-
   def scraper
-    Scraper.for(url)
+    @scraper ||= Scraper.for(url,self)
   end
 
   def response
-    @response ||= Nokogiri::HTML(uri_response)
+    scraper && scraper.response
   end
 
   # Returns a hash of link meta data, including:
@@ -71,7 +70,7 @@ class Urly
     if uri_response_attributes.include?(method)
       return uri_response_attribute(method)
     elsif scraper.has_attribute?(method)
-      return scraper.attribute(method, response)
+      return scraper.attribute(method)
     end
     super
   end
