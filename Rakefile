@@ -28,11 +28,11 @@ require 'rdoc/task'
 RDoc::Task.new do |rdoc|
   rdoc.main = "README.rdoc"
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "urly"
+  rdoc.title = "earl"
   rdoc.rdoc_files.include('README*', 'lib/**/*.rb')
 end
 
 desc "Open an irb session preloaded with this library"
 task :console do
-  sh "irb -rubygems -I lib -r urly.rb"
+  sh "irb -rubygems -I lib -r earl.rb"
 end

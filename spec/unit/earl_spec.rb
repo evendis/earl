@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Urly do
+describe Earl do
 
-  before { Urly.any_instance.stub(:uri).and_return(source) }
+  before { Earl.any_instance.stub(:uri).and_return(source) }
   let(:url) { 'http://mock.net' }
-  let(:instance) { Urly[url] }
+  let(:instance) { Earl[url] }
   subject { instance }
 
   describe '#title' do

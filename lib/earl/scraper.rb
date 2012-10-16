@@ -1,4 +1,4 @@
-class Urly::Scraper
+class Earl::Scraper
 
   class << self
     @@registry = []
@@ -15,11 +15,11 @@ class Urly::Scraper
       @attributes[name] = block
     end
 
-    def for(url, urly_source)
+    def for(url, earl_source)
       @@registry.each do |klass|
-        return klass.new(url,urly_source) if klass.regexp.match(url)
+        return klass.new(url,earl_source) if klass.regexp.match(url)
       end
-      return Urly::Scraper.new(url,urly_source)
+      return Earl::Scraper.new(url,earl_source)
     end
 
     private
@@ -30,15 +30,15 @@ class Urly::Scraper
 
   end
 
-  attr_reader :urly_source
+  attr_reader :earl_source
 
-  def initialize(url, urly_source = nil)
+  def initialize(url, earl_source = nil)
     @url = url
-    @urly_source = urly_source
+    @earl_source = earl_source
   end
 
   def response
-    @response ||= urly_source && Nokogiri::HTML(urly_source.uri_response)
+    @response ||= earl_source && Nokogiri::HTML(earl_source.uri_response)
   end
 
   def attribute(name)
@@ -47,7 +47,7 @@ class Urly::Scraper
   end
 
   def attributes
-    if self.class.superclass == Urly::Scraper
+    if self.class.superclass == Earl::Scraper
       self.class.superclass.attributes.merge(self.class.attributes)
     else
       self.class.attributes

@@ -1,19 +1,19 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/urly/version', __FILE__)
+require File.expand_path('../lib/earl/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["teejayvanslyke", "Paul Gallagher"]
   gem.email         = ["tj@elctech.com", "gallagher.paul@gmail.com"]
   gem.description   = %q{URL metadata API}
   gem.summary       = %q{URL metadata API for scraping titles, descriptions, images, and videos from URL's}
-  gem.homepage      = "https://github.com/evendis/urly"
+  gem.homepage      = "https://github.com/evendis/earl"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "urly"
+  gem.name          = "earl"
   gem.require_paths = ["lib"]
-  gem.version       = Urly::VERSION
+  gem.version       = Earl::VERSION
 
   gem.add_runtime_dependency(%q<nokogiri>, [">= 1.4.4"])
   gem.add_runtime_dependency(%q<oembedr>, [">= 1.0.0"])

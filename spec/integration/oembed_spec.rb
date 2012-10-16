@@ -5,8 +5,8 @@ require 'spec_helper'
 # or
 #  rake spec:all
 #
-describe Urly do
-  let(:instance) { Urly[url] }
+describe Earl do
+  let(:instance) { Earl[url] }
 
   subject { instance }
 

@@ -1,56 +1,60 @@
-= Urly {<img src="https://secure.travis-ci.org/evendis/urly.png" />}[http://travis-ci.org/evendis/urly]
+= Earl {<img src="https://secure.travis-ci.org/evendis/earl.png" />}[http://travis-ci.org/evendis/earl]
 
-Urly wants to help you scrape the titles, descriptions, images, and video clips
-from your favorite web pages so you can be as cool as Facebook when displaying user-submitted link
-content.
+Earl wants to help you scrape all the relevant metadata for your favorite web pages so you can be as cool as
+Facebook when displaying user-submitted link content. Earl returns details like titles, descriptions, content type,
+associated feeds, and OEmbed definitions if available.
 
-NB: urly is derived from on a source project called _earl_ by {teejayvanslyke}[https://github.com/teejayvanslyke/earl].
-The revamp into the urly project was done by {Paul Gallagher}[https://github.com/tardate], and master source is currently
-available at https://github.com/evendis/urly.
+Earl is based on an original source project called _earl_ by {teejayvanslyke}[https://github.com/teejayvanslyke/earl] (but never released as a gem).
+The revamp was done by {Paul Gallagher}[https://github.com/tardate], and master source is currently
+available at https://github.com/evendis/earl.
 
-== The Urly Cookbook
+The Earl gem is officially named _earl_. Big thanks go to {jeremyruppel}[https://github.com/jeremyruppel] who
+contributed the ownership of the _earl_ gem name. The original _earl_ gem had a somewhat similar purpose - it is now defunct, but still available up to version 0.3.0 via rubgems. Any _earl_ gem with version 1.0.0 or higher is the new gem release (and is in no way backwardly compatible with
+earlier versions).
 
-=== How do instantiate Urly?
+== The Earl Cookbook
 
-Pass any url-like string to Urly:
+=== How do instantiate Earl?
 
-    my_urly_instance = Urly.new('https://github.com/teejayvanslyke/earl')
+Pass any url-like string to Earl:
+
+    my_earl_instance = Earl.new('https://github.com/teejayvanslyke/earl')
     #
     # or using the []= convenience method:
-    my_urly_instance = Urly['https://github.com/teejayvanslyke/earl']
+    my_earl_instance = Earl['https://github.com/teejayvanslyke/earl']
 
 
 === How do I inspect details of the page?
 
-    urly = Urly['https://github.com/teejayvanslyke/earl']
-    urly.title
+    earl = Earl['https://github.com/teejayvanslyke/earl']
+    earl.title
     =>  "teejayvanslyke/earl · GitHub"
-    urly.description
+    earl.description
     => "earl - URL metadata API for scraping titles, descriptions, images, and videos from URL's."
-    urly.image
+    earl.image
     => "https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7@4x.png?1338956357"
 
 === How do I get oembed details for a link?
 
-Urly will get oembed details for a link if they are available.
+Earl will get oembed details for a link if they are available.
 
-    urly = Urly['http://www.youtube.com/watch?v=g3DCEcSlfhw']
-    urly.oembed
+    earl = Earl['http://www.youtube.com/watch?v=g3DCEcSlfhw']
+    earl.oembed
     => {"provider_url"=>"http://www.youtube.com/", "thumbnail_url"=>"http://i4.ytimg.com/vi/g3DCEcSlfhw/hqdefault.jpg", "title"=>"'Virtuosos of Guitar 2008' festival, Moscow. Marcin Dylla", "html"=>"<iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed\" frameborder=\"0\" allowfullscreen></iframe>", "author_name"=>"guitarmagnet", "height"=>315, "thumbnail_width"=>480, "width"=>420, "version"=>"1.0", "author_url"=>"http://www.youtube.com/user/guitarmagnet", "provider_name"=>"YouTube", "type"=>"video", "thumbnail_height"=>360}
     # to get the embed code:
-    urly.oembed_html
+    earl.oembed_html
     => "<iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed\" frameborder=\"0\" allowfullscreen></iframe>"
 
 === How do I customise the oembed link?
 
-Supported oembed parameters may be provided with to `Urly.new` or to the `oembed` call:
+Supported oembed parameters may be provided with to `Earl.new` or to the `oembed` call:
 
-    urly = Urly.new('http://www.youtube.com/watch?v=g3DCEcSlfhw', {:oembed => {:maxwidth => "200", :maxheight => "320"}})
-    urly.oembed_html
+    earl = Earl.new('http://www.youtube.com/watch?v=g3DCEcSlfhw', {:oembed => {:maxwidth => "200", :maxheight => "320"}})
+    earl.oembed_html
     => <iframe width="200" height="150" src="http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed" frameborder="0" allowfullscreen></iframe>
-    urly = Urly.new('http://www.youtube.com/watch?v=g3DCEcSlfhw')
-    urly.oembed({:maxwidth => "100", :maxheight => "120"})
-    urly.oembed_html
+    earl = Earl.new('http://www.youtube.com/watch?v=g3DCEcSlfhw')
+    earl.oembed({:maxwidth => "100", :maxheight => "120"})
+    earl.oembed_html
     => <iframe width="100" height="75" src="http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed" frameborder="0" allowfullscreen></iframe>
 
 
@@ -58,16 +62,16 @@ Supported oembed parameters may be provided with to `Urly.new` or to the `oembed
 
 To see all of the attributes a URL provides, simply ask:
 
-    urly = Urly['https://github.com/teejayvanslyke/earl']
-    urly.attributes
+    earl = Earl['https://github.com/teejayvanslyke/earl']
+    earl.attributes
     => [:title, :image, :description, :rss_feed, :atom_feed]
 
 
-=== How can I extend Urly to scrape additional page details?
+=== How can I extend Earl to scrape additional page details?
 
 Need to scrape additional page details currently supported by Earl?  Implement your own scraper:
 
-    class QotdScraper < Urly::Scraper
+    class QotdScraper < Earl::Scraper
       match /^http\:\/\/www\.quotationspage\.com\/qotd\.html$/
 
       define_attribute :qotd do |doc|
@@ -80,21 +84,21 @@ Use the match method to limit the scope of URLs that your scraper will apply to.
 
 Your new attribute is now available for use:
 
-    Urly['http://www.quotationspage.com/qotd.html'].qotd
+    Earl['http://www.quotationspage.com/qotd.html'].qotd
     => "Never interrupt your enemy when he is making a mistake."
 
 
 === How do I install it for normal use?
 
-If using bundler, add gem 'urly' your application's Gemfile and run `bundle`.
+If using bundler, add gem 'earl' your application's Gemfile and run `bundle`.
 
 Or install it from the command-line:
 
-    $ gem install urly
+    $ gem install earl
 
 === How do I install it for gem development?
 
-To work on enhancements of fix bugs in Urly, fork and clone the github repository.
+To work on enhancements of fix bugs in Earl, fork and clone the github repository.
 If you are using bundler (recommended), run <tt>bundle</tt> to install development dependencies:
 
     $ gem install bundler
@@ -126,7 +130,7 @@ Guard is installed as part of the development dependencies. Start a guard proces
 
 It will run all the tests to start with by default. Then whenever you change a file, the associated tests will execute in this terminal window.
 
-== Contributing to Urly
+== Contributing to Earl
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
@@ -138,4 +142,4 @@ It will run all the tests to start with by default. Then whenever you change a f
 
 == Copyright
 
-Copyright (c) 2009 T.J. VanSlyke. See LICENSE for details.
+See LICENSE for details.

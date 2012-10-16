@@ -6,8 +6,8 @@ class MockOembedResponse
   end
 end
 
-describe Urly do
-  let(:instance) { Urly.new(url,options) }
+describe Earl do
+  let(:instance) { Earl.new(url,options) }
   let(:url) { 'http:://example.com' }
   let(:options) { {} }
 

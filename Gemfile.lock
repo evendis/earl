@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    urly (0.0.1)
+    earl (1.0.0)
       nokogiri (>= 1.4.4)
       oembedr (>= 1.0.0)
 
@@ -52,9 +52,9 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (> 1.1.0)
+  earl!
   guard-rspec (~> 1.2.0)
   rake (~> 0.9.2.2)
   rb-fsevent (~> 0.9.1)
   rdoc (~> 3.11)
   rspec (~> 2.8.0)
-  urly!

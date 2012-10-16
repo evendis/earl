@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'oembedr'
 
-class Urly
+class Earl
 
   attr_accessor :url, :options, :oembed
 
