@@ -18,21 +18,21 @@ earlier versions).
 
 Pass any url-like string to Earl:
 
-    my_earl_instance = Earl.new('https://github.com/teejayvanslyke/earl')
+    my_earl_instance = Earl.new('https://github.com/evendis/earl')
     #
     # or using the []= convenience method:
-    my_earl_instance = Earl['https://github.com/teejayvanslyke/earl']
+    my_earl_instance = Earl['https://github.com/evendis/earl']
 
 
 === How do I inspect details of the page?
 
-    earl = Earl['https://github.com/teejayvanslyke/earl']
+    earl = Earl['https://github.com/evendis/earl']
     earl.title
-    =>  "teejayvanslyke/earl · GitHub"
+    =>  "evendis/earl · GitHub"
     earl.description
     => "earl - URL metadata API for scraping titles, descriptions, images, and videos from URL's."
     earl.image
-    => "https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7@4x.png?1338956357"
+    => "https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7@4x.png?1340935010"
 
 === How do I get oembed details for a link?
 
@@ -62,9 +62,9 @@ Supported oembed parameters may be provided with to `Earl.new` or to the `oembed
 
 To see all of the attributes a URL provides, simply ask:
 
-    earl = Earl['https://github.com/teejayvanslyke/earl']
+    earl = Earl['https://github.com/evendis/earl']
     earl.attributes
-    => [:title, :image, :description, :rss_feed, :atom_feed]
+    => [:title, :image, :description, :rss_feed, :atom_feed, :content_type, :base_url, :charset, :content_encoding, :headers, :feed]
 
 
 === How can I extend Earl to scrape additional page details?
@@ -85,7 +85,7 @@ Use the match method to limit the scope of URLs that your scraper will apply to.
 Your new attribute is now available for use:
 
     Earl['http://www.quotationspage.com/qotd.html'].qotd
-    => "Never interrupt your enemy when he is making a mistake."
+    => "Love is a snowmobile racing across the tundra and then suddenly it flips over, pinning you underneath. At night, the ice weasels come."
 
 
 === How do I install it for normal use?
