@@ -1,9 +1,10 @@
-class Earl::Scraper
+# frozen_string_literal: true
 
+# Base class for nokogiri page scraping
+class Earl::Scraper
   class << self
     @@registry = []
-    attr_reader :regexp
-    attr_reader :attributes
+    attr_reader :regexp, :attributes
 
     def match(regexp)
       @regexp = regexp
@@ -17,9 +18,9 @@ class Earl::Scraper
 
     def for(url, earl_source)
       @@registry.each do |klass|
-        return klass.new(url,earl_source) if klass.regexp.match(url)
+        return klass.new(url, earl_source) if klass.regexp.match(url)
       end
-      Earl::Scraper.new(url,earl_source)
+      Earl::Scraper.new(url, earl_source)
     end
 
     def register(scraper_klass)
@@ -40,9 +41,9 @@ class Earl::Scraper
   end
 
   def attribute(name)
-    return unless has_attribute?(name)
+    return unless attribute?(name)
 
-    self.attributes[name].call(response)
+    attributes[name].call(response)
   end
 
   def attributes
@@ -53,10 +54,10 @@ class Earl::Scraper
     end
   end
 
-  def has_attribute?(name)
+  def attribute?(name)
     return false unless self.class.attributes
 
-    self.attributes.has_key?(name)
+    attributes.key?(name)
   end
 
   define_attribute :title do |doc|

@@ -7,7 +7,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
-desc "Open an irb session preloaded with this library"
+desc 'Open an irb session preloaded with this library'
 task :console do
-  sh "irb -I lib -r earl.rb"
+  sh 'irb -I lib -r earl.rb'
 end

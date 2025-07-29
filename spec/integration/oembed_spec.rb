@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Earl do
@@ -5,14 +7,14 @@ describe Earl do
 
   vcr_base = 'feed'
 
-  context "when page does not support oembed", vcr: { cassette_name: "#{vcr_base}/no_oembed" } do
+  context 'when page does not support oembed', vcr: { cassette_name: "#{vcr_base}/no_oembed" } do
     let(:url) { 'https://github.com/evendis/earl' }
-    it { expect(subject.oembed).to eql({error: 'no matching providers found', url: 'https://github.com/evendis/earl'}) }
+    it { expect(subject.oembed).to eql({ error: 'no matching providers found', url: 'https://github.com/evendis/earl' }) }
     it { expect(subject.oembed_html).to be_nil }
-    describe "#metadata" do
+    describe '#metadata' do
       subject { instance.metadata }
-      it { expect(subject[:base_url]).to match(/github\.com\/evendis\/earl/) }
-      it { expect(subject[:content_type]).to eql("text/html") }
+      it { expect(subject[:base_url]).to match(%r{github\.com/evendis/earl}) }
+      it { expect(subject[:content_type]).to eql('text/html') }
       it { expect(subject[:html]).to be_nil }
     end
   end
