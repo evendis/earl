@@ -48,7 +48,7 @@ Earl will get oembed details for a link if they are available.
 
 Supported oembed parameters may be provided with to `Earl.new` or to the `oembed` call:
 
-    earl = Earl.new('https://www.youtube.com/watch?v=g3DCEcSlfhw', {:oembed => {:maxwidth => "200", :maxheight => "320"}})
+    earl = Earl.new('https://www.youtube.com/watch?v=hNSkCqMUMQA', {:oembed => {:maxwidth => "200", :maxheight => "320"}})
     earl.oembed_html
     => <iframe width="200" height="150" src="http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed" frameborder="0" allowfullscreen></iframe>
     earl = Earl.new('http://www.youtube.com/watch?v=g3DCEcSlfhw')

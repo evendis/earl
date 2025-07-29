@@ -2,7 +2,6 @@ require 'open-uri'
 require 'oembedr'
 
 class Earl
-
   attr_accessor :url, :options, :oembed
 
   def initialize(url, options={})
@@ -19,7 +18,7 @@ class Earl
   end
 
   def uri_response
-    @uri_response ||= open(uri)
+    @uri_response ||= URI.open(uri)
   end
 
   # Returns
@@ -47,7 +46,7 @@ class Earl
   protected :uri_response_attributes
 
   def scraper
-    @scraper ||= Scraper.for(url,self)
+    @scraper ||= Scraper.for(url, self)
   end
 
   def response
@@ -108,6 +107,7 @@ class Earl
   #   }
   #
   # +options+ defines a custom oembed options hash and will cause a re-fetch of the oembed metadata
+  # TODO: Oembedr is outdated and not longer works with most/all providers
   def oembed(options=nil)
     if options # use custom options, refetch oembed metadata
       @options[:oembed] = options
@@ -147,12 +147,7 @@ class Earl
     end
   end
 
-  class << self
-
-    def [](url)
-      new(url)
-    end
-
+  def self.[](url)
+    new(url)
   end
-
 end
