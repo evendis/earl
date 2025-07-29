@@ -1,27 +1,25 @@
-# -*- encoding: utf-8 -*-
-require File.expand_path('../lib/earl/version', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'earl/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ["teejayvanslyke", "Paul Gallagher"]
   gem.email         = ["tj@elctech.com", "gallagher.paul@gmail.com"]
-  gem.description   = %q{URL metadata API}
-  gem.summary       = %q{URL metadata API for scraping titles, descriptions, images, and videos from URL's}
-  gem.homepage      = "https://github.com/evendis/earl"
+  gem.description   = 'URL metadata API'
+  gem.summary       = 'URL metadata API for scraping titles, descriptions, images, and videos from URLs'
+  gem.homepage      = 'https://github.com/evendis/earl'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "earl"
+  gem.name          = 'earl'
   gem.require_paths = ["lib"]
   gem.version       = Earl::VERSION
+  gem.license       = 'MIT'
 
-  gem.add_runtime_dependency(%q<nokogiri>, [">= 1.4.4"])
-  gem.add_runtime_dependency(%q<oembedr>, [">= 1.0.0"])
-  gem.add_development_dependency(%q<bundler>, ["> 1.1.0"])
-  gem.add_development_dependency(%q<rake>, ["~> 0.9.2.2"])
-  gem.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
-  gem.add_development_dependency(%q<rdoc>, ["~> 3.11"])
-  gem.add_development_dependency(%q<guard-rspec>, ["~> 1.2.0"])
-  gem.add_development_dependency(%q<rb-fsevent>, ["~> 0.9.1"])
-
+  gem.required_ruby_version = '>= 3.0'
+  gem.add_runtime_dependency 'nokogiri', '~> 1.18'
+  gem.add_runtime_dependency 'oembedr', '>= 1.0.0'
 end

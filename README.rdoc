@@ -1,4 +1,4 @@
-= Earl {<img src="https://secure.travis-ci.org/evendis/earl.png" />}[http://travis-ci.org/evendis/earl]
+= Earl
 
 Earl wants to help you scrape all the relevant metadata for your favorite web pages so you can be as cool as
 Facebook when displaying user-submitted link content. Earl returns details like titles, descriptions, content type,

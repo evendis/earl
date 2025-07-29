@@ -1,4 +1,12 @@
-source :rubygems
+# frozen_string_literal: true
 
-# Specify your gem's dependencies in earl.gemspec
+source 'https://rubygems.org'
+
+# Specify gem dependencies in earl.gemspec
 gemspec
+
+# development dependencies
+gem 'bundler', '>= 2.2.33'
+gem 'guard-rspec'
+gem 'rake'
+gem 'rspec'
