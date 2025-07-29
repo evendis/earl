@@ -5,7 +5,7 @@ Facebook when displaying user-submitted link content. Earl returns details like 
 associated feeds, and OEmbed definitions if available.
 
 Earl is based on an original source project called _earl_ by [teejayvanslyke](https://github.com/teejayvanslyke/earl) (but never released as a gem).
-The revamp was done by [Paul Gallagher](<https://github.com/tardate>), and master source is currently
+The revamp was done by [Paul Gallagher](https://github.com/tardate), and master source is currently
 available at <https://github.com/evendis/earl>.
 
 The Earl gem is officially named _earl_. Big thanks go to [jeremyruppel](https://github.com/jeremyruppel) who
