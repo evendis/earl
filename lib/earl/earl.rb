@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'open-uri'
-require 'oembedr'
-
 # Earl is a class that represents a URL and provides methods to fetch metadata about the page
 class Earl
   attr_accessor :url, :options
@@ -116,14 +113,13 @@ class Earl
   #   }
   #
   # +options+ defines a custom oembed options hash and will cause a re-fetch of the oembed metadata
-  # TODO: Oembedr is outdated and not longer works with most/all providers
   def oembed(options = nil)
     if options # use custom options, refetch oembed metadata
       @options[:oembed] = options
       @oembed = nil
     end
     @oembed ||= begin
-      h = Oembedr.fetch(base_url, params: oembed_options).body
+      h = fetch_oembed(base_url).fields
       if h
         h.keys.each do |key| # symbolize_keys!
           new_key = begin
@@ -139,6 +135,11 @@ class Earl
       nil
     end
   end
+
+  def fetch_oembed(base_url)
+    OEmbed::Providers.get(base_url)
+  end
+  protected :fetch_oembed
 
   # Returns the oembed code for the url (or nil if not defined/available)
   def oembed_html

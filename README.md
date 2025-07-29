@@ -37,24 +37,33 @@ Pass any url-like string to Earl:
 
 Earl will get oembed details for a link if they are available.
 
-    earl = Earl['http://www.youtube.com/watch?v=g3DCEcSlfhw']
+    earl = Earl['https://www.youtube.com/watch?v=hNSkCqMUMQA']
     earl.oembed
-    => {"provider_url"=>"http://www.youtube.com/", "thumbnail_url"=>"http://i4.ytimg.com/vi/g3DCEcSlfhw/hqdefault.jpg", "title"=>"'Virtuosos of Guitar 2008' festival, Moscow. Marcin Dylla", "html"=>"<iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed\" frameborder=\"0\" allowfullscreen></iframe>", "author_name"=>"guitarmagnet", "height"=>315, "thumbnail_width"=>480, "width"=>420, "version"=>"1.0", "author_url"=>"http://www.youtube.com/user/guitarmagnet", "provider_name"=>"YouTube", "type"=>"video", "thumbnail_height"=>360}
+    => {:title=>"[JA][Keynote] Ruby Taught Me About Encoding Under the Hood / Mari Imaizumi @ima1zumi",
+        :author_name=>"RubyKaigi",
+        :author_url=>"https://www.youtube.com/@rubykaigi4884",
+        :type=>"video",
+        :height=>113,
+        :width=>200,
+        :version=>"1.0",
+        :provider_name=>"YouTube",
+        :provider_url=>"https://www.youtube.com/",
+        :thumbnail_height=>360,
+        :thumbnail_width=>480,
+        :thumbnail_url=>"https://i.ytimg.com/vi/hNSkCqMUMQA/hqdefault.jpg",
+        :html=>
+        "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/hNSkCqMUMQA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"[JA][Keynote] Ruby Taught Me About Encoding Under the Hood / Mari Imaizumi @ima1zumi\"></iframe>"}
     # to get the embed code:
     earl.oembed_html
-    => "<iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed\" frameborder=\"0\" allowfullscreen></iframe>"
+    => "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/hNSkCqMUMQA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"[JA][Keynote] Ruby Taught Me About Encoding Under the Hood / Mari Imaizumi @ima1zumi\"></iframe>"
 
 ### How do I customise the oembed link?
 
 Supported oembed parameters may be provided with to `Earl.new` or to the `oembed` call:
 
-    earl = Earl.new('https://www.youtube.com/watch?v=hNSkCqMUMQA', {:oembed => {:maxwidth => "200", :maxheight => "320"}})
+    earl = Earl.new('https://www.youtube.com/watch?v=hNSkCqMUMQA', { oembed: { maxwidth: '200', maxheight: '320' }})
     earl.oembed_html
-    => <iframe width="200" height="150" src="http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed" frameborder="0" allowfullscreen></iframe>
-    earl = Earl.new('http://www.youtube.com/watch?v=g3DCEcSlfhw')
-    earl.oembed({:maxwidth => "100", :maxheight => "120"})
-    earl.oembed_html
-    => <iframe width="100" height="75" src="http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed" frameborder="0" allowfullscreen></iframe>
+    => "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/hNSkCqMUMQA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"[JA][Keynote] Ruby Taught Me About Encoding Under the Hood / Mari Imaizumi @ima1zumi\"></iframe>"
 
 ### How do I inspect what attributes are available for a page?
 
