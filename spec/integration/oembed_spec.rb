@@ -1,14 +1,11 @@
 require 'spec_helper'
 
-# These tests hit real network endpoints - not included in the default test runs. Run with:
-#  rake spec:integration
-# or
-#  rake spec:all
-#
 describe Earl do
   subject(:instance) { Earl[url] }
 
-  context "when page does not support oembed" do
+  vcr_base = 'feed'
+
+  context "when page does not support oembed", vcr: { cassette_name: "#{vcr_base}/no_oembed" } do
     let(:url) { 'https://github.com/evendis/earl' }
     it { expect(subject.oembed).to eql({error: 'no matching providers found', url: 'https://github.com/evendis/earl'}) }
     it { expect(subject.oembed_html).to be_nil }
@@ -20,7 +17,8 @@ describe Earl do
     end
   end
 
-  # context "when page supports oembed" do
+  # TODO: oembed support needs fixing
+  # context "when youtube oembed", vcr: { cassette_name: "#{vcr_base}/youtube_oembed" } do
   #   let(:url) { 'https://www.youtube.com/watch?v=g3DCEcSlfhw' }
   #   let(:expected_oembed_html) { %(<iframe width="420" height="315" src="http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed" frameborder="0" allowfullscreen></iframe>) }
 
