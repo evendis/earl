@@ -24,15 +24,7 @@ end
 
 task default: :spec
 
-require 'rdoc/task'
-RDoc::Task.new do |rdoc|
-  rdoc.main = "README.rdoc"
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "earl"
-  rdoc.rdoc_files.include('README*', 'lib/**/*.rb')
-end
-
 desc "Open an irb session preloaded with this library"
 task :console do
-  sh "irb -rubygems -I lib -r earl.rb"
+  sh "irb -I lib -r earl.rb"
 end

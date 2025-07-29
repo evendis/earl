@@ -9,7 +9,7 @@ describe Earl do
   subject(:instance) { Earl[url] }
 
   # context "when page does not support oembed" do
-  #   let(:url) { 'https://google.com/' }
+  #   let(:url) { 'https://github.com/evendis/earl' }
   #   it { expect(subject.oembed).to be_nil }
   #   it { expect(subject.oembed_html).to be_nil }
   #   describe "#metadata" do
