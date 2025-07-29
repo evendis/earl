@@ -1,26 +1,9 @@
-#!/usr/bin/env rake
-require "bundler/gem_tasks"
+# frozen_string_literal: true
 
-require 'rspec'
+require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 
-desc "Run only unit test examples"
-RSpec::Core::RakeTask.new do |t|
-  t.rspec_opts = ["-c", "-f progress"]
-  t.pattern = 'spec/unit/**/*_spec.rb'
-end
-
-desc "Run only integration test examples"
-RSpec::Core::RakeTask.new(:'spec:integration') do |t|
-  t.rspec_opts = ["-c", "-f progress"]
-  t.pattern = 'spec/integration/**/*_spec.rb'
-end
-
-desc "Run all test examples including integration tests"
-RSpec::Core::RakeTask.new(:'spec:all') do |t|
-  t.rspec_opts = ["-c", "-f progress"]
-  t.pattern = 'spec/**/*_spec.rb'
-end
+RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 

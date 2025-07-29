@@ -108,14 +108,8 @@ Once development dependencies are installed, all unit tests are run with just:
     # or..
     $ rake spec
 
-Unit tests exclude a set of integration tests that actually hit the network (therefore not 'nice' to run all the time,
-and also subject to failures due to network availability or changes in the services accessed). To run integration tests:
-
-    rake spec:integration
-
-To run all tests (unit and integration):
-
-    rake spec:all
+VCR is used to record integration tests. To re-record sessions, delete the corresponding cassette in
+[spec/fixtures/cassettes](./spec/fixtures/cassettes/).
 
 ### How do I automatically run tests when I modify files?
 
