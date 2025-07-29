@@ -19,15 +19,13 @@ class Earl::Scraper
       @@registry.each do |klass|
         return klass.new(url,earl_source) if klass.regexp.match(url)
       end
-      return Earl::Scraper.new(url,earl_source)
+      Earl::Scraper.new(url,earl_source)
     end
 
-    private
-
-      def register(scraper_klass)
-        @@registry << scraper_klass
-      end
-
+    def register(scraper_klass)
+      @@registry << scraper_klass
+    end
+    private :register
   end
 
   attr_reader :earl_source
@@ -43,6 +41,7 @@ class Earl::Scraper
 
   def attribute(name)
     return unless has_attribute?(name)
+
     self.attributes[name].call(response)
   end
 
@@ -56,6 +55,7 @@ class Earl::Scraper
 
   def has_attribute?(name)
     return false unless self.class.attributes
+
     self.attributes.has_key?(name)
   end
 
@@ -88,6 +88,4 @@ class Earl::Scraper
       element['href']
     end
   end
-
 end
-

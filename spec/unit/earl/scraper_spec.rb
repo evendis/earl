@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe Earl::Scraper do
-
-  before :each do
-    Earl.any_instance.stub(:uri_response).and_return(<<-DOC
+  before do
+    allow_any_instance_of(Earl).to receive(:uri_response).and_return(<<-DOC
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
     <html></html>
     DOC
@@ -11,21 +10,21 @@ describe Earl::Scraper do
   end
 
   describe 'When validating URLs' do
-    before :each do
+    before do
       class Earl::TestScraper < Earl::Scraper
         match /^http\:\/\/www\.test\.com\/$/
         define_attribute(:title) {|response| :test_title }
       end
     end
 
-    it 'should return the result if the URL matches the scraper regexp' do
-      Earl['http://www.test.com/'].title.should == :test_title
+    it 'returns the result if the URL matches the scraper regexp' do
+      expect(Earl['http://www.test.com/'].title).to eql :test_title
     end
   end
 
   describe 'When retrieving the response' do
-    it 'should return a Nokogiri document' do
-      Earl['test'].response.css('html').size.should == 1
+    it 'returns a Nokogiri document' do
+      expect(Earl['test'].response.css('html').size).to eql 1
     end
   end
 
@@ -38,11 +37,10 @@ describe Earl::Scraper do
 
     it 'inherits all attributes from its superclass' do
       scraper = SubScraper.new('foo.bar')
-      scraper.attributes.should include(:title)
-      scraper.attributes.should include(:description)
-      scraper.attributes.should include(:image)
-      scraper.attributes.should include(:some_attribute)
+      expect(scraper.attributes).to include(:title)
+      expect(scraper.attributes).to include(:description)
+      expect(scraper.attributes).to include(:image)
+      expect(scraper.attributes).to include(:some_attribute)
     end
   end
-
 end
