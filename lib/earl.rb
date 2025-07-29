@@ -2,6 +2,10 @@
 
 require 'nokogiri'
 require 'open-uri'
+require 'json'
+require 'oembed'
+
+OEmbed::Providers.register_all
 
 class Earl
 end

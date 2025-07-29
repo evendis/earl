@@ -22,5 +22,5 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 3.0'
   gem.add_runtime_dependency 'nokogiri', '~> 1.18'
-  gem.add_runtime_dependency 'oembedr', '>= 1.0.0'
+  gem.add_runtime_dependency 'ruby-oembed', '~> 0.18.1'
 end

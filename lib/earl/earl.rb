@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'open-uri'
-require 'oembedr'
-
 # Earl is a class that represents a URL and provides methods to fetch metadata about the page
 class Earl
   attr_accessor :url, :options
@@ -97,33 +94,35 @@ class Earl
     { maxwidth: '560', maxheight: '315' }.merge(options[:oembed] || {})
   end
 
-  # Returns the oembed meta data hash for the URL (or nil if not defined/available) e.g.
-  # For http://www.youtube.com/watch?v=g3DCEcSlfhw:
-  #   {
-  #     "provider_url"=>"http://www.youtube.com/",
-  #     "thumbnail_url"=>"http://i4.ytimg.com/vi/g3DCEcSlfhw/hqdefault.jpg",
-  #     "title"=>"'Virtuosos of Guitar 2008' festival, Moscow. Marcin Dylla",
-  #     "html"=>"<iframe width=\"459\" height=\"344\" src=\"http://www.youtube.com/embed/g3DCEcSlfhw?fs=1&feature=oembed\" frameborder=\"0\" allowfullscreen></iframe>",
-  #     "author_name"=>"guitarmagnet",
-  #     "height"=>344,
-  #     "thumbnail_width"=>480,
-  #     "width"=>459,
-  #     "version"=>"1.0",
-  #     "author_url"=>"http://www.youtube.com/user/guitarmagnet",
-  #     "provider_name"=>"YouTube",
-  #     "type"=>"video",
-  #     "thumbnail_height"=>360
-  #   }
+  # Returns the oembed meta data hash for the URL (or nil if not defined/available)
+  # e.g. for https://www.youtube.com/watch?v=hNSkCqMUMQA:
+  # {
+  #   :title=>"[JA][Keynote] Ruby Taught Me About Encoding Under the Hood / Mari Imaizumi @ima1zumi",
+  #   :author_name=>"RubyKaigi",
+  #   :author_url=>"https://www.youtube.com/@rubykaigi4884",
+  #   :type=>"video",
+  #   :height=>113,
+  #   :width=>200,
+  #   :version=>"1.0",
+  #   :provider_name=>"YouTube",
+  #   :provider_url=>"https://www.youtube.com/",
+  #   :thumbnail_height=>360,
+  #   :thumbnail_width=>480,
+  #   :thumbnail_url=>"https://i.ytimg.com/vi/hNSkCqMUMQA/hqdefault.jpg",
+  #   :html=> "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/hNSkCqMUMQA?feature=oembed\" \
+  #     frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" \
+  #     referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen \
+  #     title=\"[JA][Keynote] Ruby Taught Me About Encoding Under the Hood / Mari Imaizumi @ima1zumi\"></iframe>"
+  # }
   #
   # +options+ defines a custom oembed options hash and will cause a re-fetch of the oembed metadata
-  # TODO: Oembedr is outdated and not longer works with most/all providers
   def oembed(options = nil)
     if options # use custom options, refetch oembed metadata
       @options[:oembed] = options
       @oembed = nil
     end
     @oembed ||= begin
-      h = Oembedr.fetch(base_url, params: oembed_options).body
+      h = fetch_oembed(base_url).fields
       if h
         h.keys.each do |key| # symbolize_keys!
           new_key = begin
@@ -139,6 +138,11 @@ class Earl
       nil
     end
   end
+
+  def fetch_oembed(base_url)
+    OEmbed::Providers.get(base_url)
+  end
+  protected :fetch_oembed
 
   # Returns the oembed code for the url (or nil if not defined/available)
   def oembed_html

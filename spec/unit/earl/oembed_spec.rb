@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 class MockOembedResponse
-  def body
+  def fields
     { 'html' => '<iframe/>' }
   end
 end
@@ -27,7 +27,7 @@ describe Earl do
     context 'with custom options passed to oembed' do
       let(:expected) { { maxwidth: '360', maxheight: '315' } }
       before do
-        allow(Oembedr).to receive(:fetch).and_return(nil)
+        allow(instance).to receive(:fetch_oembed).and_return(nil)
         instance.oembed({ maxwidth: '360' })
       end
       it { expect(subject).to eql(expected) }
@@ -38,7 +38,7 @@ describe Earl do
     let(:dummy_response) { MockOembedResponse.new }
     before do
       expect(instance).to receive(:base_url).and_return('')
-      expect(Oembedr).to receive(:fetch).and_return(dummy_response)
+      expect(instance).to receive(:fetch_oembed).and_return(dummy_response)
     end
     subject { instance.oembed }
     it { expect(subject).to eql({ html: '<iframe/>' }) }
