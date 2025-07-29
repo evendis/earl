@@ -1,10 +1,14 @@
+# frozen_string_literal: true
+
 require 'open-uri'
 require 'oembedr'
 
+# Earl is a class that represents a URL and provides methods to fetch metadata about the page
 class Earl
-  attr_accessor :url, :options, :oembed
+  attr_accessor :url, :options
+  attr_writer :oembed
 
-  def initialize(url, options={})
+  def initialize(url, options = {})
     @url = url
     @options = options
   end
@@ -18,7 +22,7 @@ class Earl
   end
 
   def uri_response
-    @uri_response ||= URI.open(uri)
+    @uri_response ||= uri.open
   end
 
   # Returns
@@ -35,13 +39,13 @@ class Earl
     when :headers
       uri_response_attribute(:meta)
     else
-      uri_response && uri_response.respond_to?(name) && uri_response.send(name)
+      uri_response.respond_to?(name) && uri_response.send(name)
     end
   end
   protected :uri_response_attribute
 
   def uri_response_attributes
-    [:content_type,:base_url,:charset,:content_encoding,:headers]
+    %i[content_type base_url charset content_encoding headers]
   end
   protected :uri_response_attributes
 
@@ -50,7 +54,7 @@ class Earl
   end
 
   def response
-    scraper && scraper.response
+    scraper&.response
   end
 
   # Returns a hash of link meta data, including:
@@ -59,11 +63,15 @@ class Earl
   def metadata
     data = oembed || {}
     attributes.each do |attribute|
-      if attribute_value = self.send(attribute)
+      if attribute_value = send(attribute)
         data[attribute] ||= attribute_value
       end
     end
     data
+  end
+
+  def respond_to_missing?(name, include_private)
+    uri_response_attributes.include?(name) || scraper&.attribute?(name) || super
   end
 
   # Dispatch missing methods if a match for:
@@ -71,11 +79,12 @@ class Earl
   # - scraper attributes
   def method_missing(method, *args)
     if uri_response_attributes.include?(method)
-      return uri_response_attribute(method)
-    elsif scraper && scraper.has_attribute?(method)
-      return scraper.attribute(method)
+      uri_response_attribute(method)
+    elsif scraper&.attribute?(method)
+      scraper.attribute(method)
+    else
+      super
     end
-    super
   end
 
   # Returns a full array of attributes available for the link
@@ -85,7 +94,7 @@ class Earl
 
   # Returns the options to be used for oembed
   def oembed_options
-    { :maxwidth => "560", :maxheight => "315" }.merge(options[:oembed]||{})
+    { maxwidth: '560', maxheight: '315' }.merge(options[:oembed] || {})
   end
 
   # Returns the oembed meta data hash for the URL (or nil if not defined/available) e.g.
@@ -108,21 +117,27 @@ class Earl
   #
   # +options+ defines a custom oembed options hash and will cause a re-fetch of the oembed metadata
   # TODO: Oembedr is outdated and not longer works with most/all providers
-  def oembed(options=nil)
+  def oembed(options = nil)
     if options # use custom options, refetch oembed metadata
       @options[:oembed] = options
       @oembed = nil
     end
-    begin
-      @oembed ||= if h = Oembedr.fetch(base_url, :params => oembed_options).body
+    @oembed ||= begin
+      h = Oembedr.fetch(base_url, params: oembed_options).body
+      if h
         h.keys.each do |key| # symbolize_keys!
-          h[(key.to_sym rescue key) || key] = h.delete(key)
+          new_key = begin
+            key.to_sym
+          rescue StandardError
+            key
+          end
+          h[new_key] = h.delete(key)
         end
         h
       end
-    rescue
+    rescue StandardError
+      nil
     end
-    @oembed
   end
 
   # Returns the oembed code for the url (or nil if not defined/available)
@@ -131,7 +146,7 @@ class Earl
   end
 
   # Returns true if there is an ATOM or RSS feed associated with this URL.
-  def has_feed?
+  def feed?
     !feed.nil?
   end
 

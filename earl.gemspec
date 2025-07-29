@@ -1,21 +1,22 @@
 # frozen_string_literal: true
 
+require 'English'
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'earl/version'
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["teejayvanslyke", "Paul Gallagher"]
-  gem.email         = ["tj@elctech.com", "gallagher.paul@gmail.com"]
+  gem.authors       = ['teejayvanslyke', 'Paul Gallagher']
+  gem.email         = ['tj@elctech.com', 'gallagher.paul@gmail.com']
   gem.description   = 'URL metadata API'
   gem.summary       = 'URL metadata API for scraping titles, descriptions, images, and videos from URLs'
   gem.homepage      = 'https://github.com/evendis/earl'
 
-  gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.files         = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
+  gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = 'earl'
-  gem.require_paths = ["lib"]
+  gem.require_paths = ['lib']
   gem.version       = Earl::VERSION
   gem.license       = 'MIT'
 

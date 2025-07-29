@@ -4,3 +4,32 @@ AllCops:
   NewCops: disable
   SuggestExtensions: false
   TargetRubyVersion: 3.0
+
+Layout/LineLength:
+  Max: 199
+
+Metrics/BlockLength:
+  Max: 63
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/CyclomaticComplexity:
+  Max: 8
+
+Metrics/MethodLength:
+  Max: 20
+
+Style/ClassVars:
+  Exclude:
+    - 'lib/earl/scraper.rb'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+
+Style/ClassAndModuleChildren:
+  EnforcedStyleForClasses: compact
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent

@@ -1,19 +1,22 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Earl::Scraper do
   before do
-    allow_any_instance_of(Earl).to receive(:uri_response).and_return(<<-DOC
-    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-    <html></html>
-    DOC
+    allow_any_instance_of(Earl).to receive(:uri_response).and_return(
+      <<-DOC
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+      <html></html>
+      DOC
     )
   end
 
   describe 'When validating URLs' do
     before do
       class Earl::TestScraper < Earl::Scraper
-        match /^http\:\/\/www\.test\.com\/$/
-        define_attribute(:title) {|response| :test_title }
+        match %r{^http://www\.test\.com/$}
+        define_attribute(:title) { |_response| :test_title }
       end
     end
 
